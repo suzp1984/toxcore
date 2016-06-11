@@ -30,9 +30,8 @@ if [ -z "$TOOLCHAIN_DIR" ]; then
     exit 1
   fi
   
-  $MAKE_TOOLCHAIN --platform="${NDK_PLATFORM:-android-14}" \
-                  --arch="${TARGET_ARCH}" \
-                  --toolchain="${TOOLCHAIN_NAME:-arm-linux-androideabi-4.8}" \
+  bash $MAKE_TOOLCHAIN --platform="${NDK_PLATFORM:-android-14}" \
+                  --arch="${ARCH}" \
                   --install-dir="${TOOLCHAIN_DIR}"
 fi
 
@@ -52,6 +51,9 @@ export LDFLAGS="${LDFLAGS} -L${SYSROOT}/usr/lib"
             --with-libsodium-headers="${SODIUM_HOME}/libsodium-android-${TARGET_ARCH}/include" \
             --with-libsodium-libs="${SODIUM_HOME}/libsodium-android-${TARGET_ARCH}/lib" \
             --disable-av \
+            --disable-rt \
+            --enable-epoll=no \
+            --disable-testing \
             --prefix="${PREFIX}" && \
 
 make clean && \
