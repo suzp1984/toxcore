@@ -11,6 +11,15 @@ if [ -z "$SODIUM_HOME" ]; then
     exit
 fi
 
+if [ -z "$OPUS_HOME" ]; then
+    echo "You should probably set OPUS_HOME to the directory containing root OPUS sources"
+    exit
+fi
+
+if [ -z "$LIBVPX_HOME" ]; then
+    echo "You should probably set LIBVPX_HOME to the directory containing root LIBVPX source"
+fi
+
 if [[ -z $TARGET_ARCH ]] || [[ -z $HOST_COMPILER ]]; then
     echo "You shouldn't use android-build.sh directly, use android-[arch].sh instead"
     exit 1
@@ -50,7 +59,10 @@ export LDFLAGS="${LDFLAGS} -L${SYSROOT}/usr/lib"
             --with-sysroot="${SYSROOT}" \
             --with-libsodium-headers="${SODIUM_HOME}/libsodium-android-${TARGET_ARCH}/include" \
             --with-libsodium-libs="${SODIUM_HOME}/libsodium-android-${TARGET_ARCH}/lib" \
-            --disable-av \
+            --with-libvpx-headers="${LIBVPX_HOME}/libvpx-android-${TARGET_ARCH}/include" \
+            --with-libvpx-libs="${LIBVPX_HOME}/libvpx-android-${TARGET_ARCH}/lib" \
+            --with-opus-headers="${OPUS_HOME}/opus-android-${TARGET_ARCH}/include" \
+            --with-opus-libs="${OPUS_HOME}/opus-android-${TARGET_ARCH}/lib" \
             --disable-rt \
             --enable-epoll=no \
             --disable-testing \

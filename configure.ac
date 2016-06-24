@@ -499,6 +499,64 @@ AC_CHECK_LIB([pthread], [pthread_self],
     ]
 )
 
+### add opus dependency ###
+OPUS_SEARCH_HEADERS=
+OPUS_SEARCH_LIBS=
+
+AC_ARG_WITH(opus-headers,
+        AC_HELP_STRING([--with-opus-headers=DIR],
+                       [search for opus header files in DIR]),
+        [
+            OPUS_SEARCH_HEADERS="$withval"
+            AC_MSG_NOTICE([will search for opus header files in $withval])
+        ]
+)
+
+AC_ARG_WITH(opus-libs,
+        AC_HELP_STRING([--with-opus-libs=DIR],
+                       [search for opus libraries in DIR]),
+        [
+            OPUS_SEARCH_LIBS="$withval"
+            AC_MSG_NOTICE([will search for opus libraries in $withval])
+        ]
+)
+
+## check opus libs
+#if test -n "$OPUS_SEARCH_LIBS"; then
+#fi
+
+## check opus headers
+
+### end opus dependency ###
+
+### add libvpx dependency ###
+LIBVPX_SEARCH_HEADERS=
+LIBVPX_SEARCH_LIBS=
+
+AC_ARG_WITH(libvpx-headers,
+        AC_HELP_STRING([--with-libvpx-headers=DIR],
+                       [search for libvpx header files in DIR]),
+        [
+            LIBVPX_SEARCH_HEADERS="$withval"
+            AC_MSG_NOTICE([will search for libvpx header files in $withval])
+        ]
+)
+
+AC_ARG_WITH(libvpx-libs,
+        AC_HELP_STRING([--with-libvpx-libs=DIR],
+                       [search for libvpx libraries in DIR]),
+        [
+            LIBVPX_SEARCH_LIBS="$withval"
+            AC_MSG_NOTICE([will search for libvpx libraries in $withval])
+        ]
+)
+
+
+
+### end libvpx dependency ###
+
+export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:$OPUS_SEARCH_LIBS/pkgconfig:$LIBVPX_SEARCH_LIBS/pkgconfig
+
 if test "x$BUILD_AV" = "xyes"; then
     PKG_CHECK_MODULES([OPUS], [opus],
         [],
